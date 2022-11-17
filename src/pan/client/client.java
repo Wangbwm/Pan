@@ -5,7 +5,7 @@ import java.net.Socket;
 
 public class client {
     public static void main(String[] args) throws IOException {
-        Socket mySocket=new Socket("127.0.0.1",8080);
+        Socket mySocket=new Socket("127.0.0.1",8081);
         ClientThread function=new ClientThread(mySocket);
         new Thread(function,"客户端线程： "+mySocket.getInetAddress()).start();
     }

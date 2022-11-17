@@ -5,7 +5,7 @@ import java.net.Socket;
 
 public class Server {
     public static void main(String[] args) throws IOException {
-        ServerSocket mySocket=new ServerSocket(8080);
+        ServerSocket mySocket=new ServerSocket(8081);
         Socket getSocket;
         System.out.println("Waiting……");
         while(true){

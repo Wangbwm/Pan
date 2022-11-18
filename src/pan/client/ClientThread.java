@@ -96,8 +96,23 @@ public class ClientThread implements Runnable{
     }
 
     private void receiveFile(String name) throws IOException {
-        File myFile=new File("download/"+ name);
-        getFile(myFile);
+        String[] temp=name.split("\\\\");
+        if(temp.length>1){//说明是目录下的文件
+            String bathPath="download";
+            for (int i=0;i<temp.length;i++){
+                if(i!=temp.length){
+                    bathPath=bathPath+"\\\\"+temp[i];
+                    File myFile = new File(bathPath);
+                    myFile.mkdirs();
+                }
+            }
+            File myFile=new File("download/"+ name);
+            getFile(myFile);
+        }else{
+            File myFile=new File("download/"+ name);
+            getFile(myFile);
+        }
+
     }
 
     private void send() throws IOException {

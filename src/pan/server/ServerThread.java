@@ -82,10 +82,13 @@ public class ServerThread implements Runnable{
     private void send() {
         try {
             String basePath="database";
-            String[] list=new File(basePath).list();
-            this.out.writeInt(list.length);
-            for(String s:list){
-                this.out.writeUTF(s);
+            //String[] list=new File(basePath).list();
+            fileFind find=new fileFind(basePath);
+            LinkedList<String>allList=find.run();
+            this.out.writeInt(allList.size());
+            for(String s:allList){
+                String[] temp=s.split("database"+"\\\\");
+                this.out.writeUTF(temp[1]);
             }
 
             String path=this.in.readUTF();

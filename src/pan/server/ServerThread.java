@@ -1,7 +1,6 @@
 package pan.server;
 
 import pan.function.fileFind;
-
 import java.io.*;
 import java.net.Socket;
 import java.util.LinkedList;
@@ -114,8 +113,6 @@ public class ServerThread implements Runnable{
     }
 
     private void sendFile(String path, File myFile) throws IOException {
-
-        //this.out.flush();
         InputStream input=new FileInputStream(myFile);
         byte[] buff=new byte[1024];
         int len;
@@ -125,7 +122,7 @@ public class ServerThread implements Runnable{
         if(myFile.length()!=0) {
             while ((len = input.read(buff)) != -1) {
                 this.out.write(buff, 0, len);
-                this.out.flush();
+                //this.out.flush();
             }
             this.out.flush();
         }
@@ -135,14 +132,22 @@ public class ServerThread implements Runnable{
         //mySocket.shutdownOutput();
     }
     private void sendDirectory(String path) throws IOException {
-        path="database/"+path;
+        path="database\\"+path;
+        String cm=path;
         fileFind find=new fileFind(path);
         LinkedList<String>list=find.run();
         this.out.writeUTF("Directory");
         this.out.writeInt(list.size());
         this.out.flush();
         for (String file:list){
-            File myFile=new File("database/"+file);
+            String[] s=file.split("\\\\");
+            for(int i=0;i<s.length;i++){
+                if(i!=0){
+                    path=path+"\\"+s[i];
+                }
+            }
+            File myFile=new File(path);
+            path=cm;
             sendFile(file,myFile);
         }
         this.mySocket.shutdownOutput();

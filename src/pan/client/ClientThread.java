@@ -5,7 +5,6 @@ import pan.function.fileFind;
 import java.io.*;
 import java.net.Socket;
 import java.util.LinkedList;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class ClientThread implements Runnable{
@@ -96,6 +95,7 @@ public class ClientThread implements Runnable{
     }
 
     private void receiveFile(String name) throws IOException {
+        String namem=this.in.readUTF();
         String[] temp=name.split("\\\\");
         if(temp.length>1){//说明是目录下的文件
             String bathPath="download";
